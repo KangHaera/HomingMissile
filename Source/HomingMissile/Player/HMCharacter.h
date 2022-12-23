@@ -16,7 +16,7 @@ class UAnimMontage;
 class USoundBase;
 
 UCLASS(config=Game)
-class AHMCharacter : public ACharacter
+class HOMINGMISSILE_API AHMCharacter : public ACharacter
 {
 	GENERATED_BODY()
 public:

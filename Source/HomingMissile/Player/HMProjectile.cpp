@@ -107,7 +107,7 @@ USceneComponent* AHMProjectile::FindHomingTarget()
 		}
 
 		//	내적을 구해서
-		//	1이면 0도, 0이면 90도, 1이면 180도
+		//	1이면 0도, 0이면 90도, -1이면 180도
 		//	적당히 0.7로 범위를 잡아준다
 		float Angle = GetDotProductTo(GetMontser);
 		if (Angle < m_CheckHomingAngle)
@@ -115,13 +115,20 @@ USceneComponent* AHMProjectile::FindHomingTarget()
 			continue;
 		}
 
-		FVector DirectionVector = GetTargetLocation() - GetMontser->GetTargetLocation();
-		float VectorSize = DirectionVector.Size();
 
 		//	범위 안에서도 가까운 애를 먼저 셀렉트 한다.
-		if (VectorSize < m_TargetDistance)
+		//FVector DirectionVector = GetTargetLocation() - GetMontser->GetTargetLocation();
+		//float VectorSize = DirectionVector.Size();
+		//if (VectorSize < m_TargetDistance)
+		//{
+		//	m_TargetDistance = VectorSize;
+		//	m_TargetMonster = GetMontser;
+		//}
+
+		//	가까운애보다 에임이랑 가까운애로 변경.
+		if (Angle > m_SaveAngle)
 		{
-			m_TargetDistance = VectorSize;
+			m_SaveAngle = Angle;
 			m_TargetMonster = GetMontser;
 		}
 	}

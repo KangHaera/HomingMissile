@@ -10,7 +10,7 @@ class UStaticMeshComponent;
 
 
 UCLASS(config=Game)
-class AHMMonster : public ACharacter
+class HOMINGMISSILE_API AHMMonster : public ACharacter
 {
 	GENERATED_BODY()
 

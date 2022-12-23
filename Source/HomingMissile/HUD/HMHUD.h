@@ -8,7 +8,7 @@
 #include "HMHUD.generated.h"
 
 UCLASS()
-class AHMHUD : public AHUD
+class HOMINGMISSILE_API AHMHUD : public AHUD
 {
 	GENERATED_BODY()
 

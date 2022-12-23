@@ -17,7 +17,7 @@ class USoundBase;
 class UParticleSystem;
 
 UCLASS(config=Game)
-class AHMProjectile : public AActor
+class HOMINGMISSILE_API AHMProjectile : public AActor
 {
 	GENERATED_BODY()
 
@@ -75,7 +75,7 @@ protected:
 private:
 	AHMMonster* m_TargetMonster = nullptr;
 
-	float m_TargetDistance = 100000.f;
+	float m_SaveAngle = -1.f;
 	FTimerHandle m_TimeHandle;
 };
 
