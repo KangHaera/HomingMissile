@@ -86,7 +86,27 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		UAnimMontage* m_FireAnimation;
+		
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_CapsuleComponentSizeX = 50.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_CapsuleComponentSizeY = 90.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		FVector m_FirstPersomCameraCompLocation = FVector(-39.56f, 1.75f, 64.f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		FRotator m_SkeletalMeshCompRotation = FRotator(1.9f, -19.19f, 5.2f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		FVector m_SkeletalMeshCompLocation = FVector(-0.5f, -4.4f, -155.7f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		FVector m_MuzzleLocationCompLocation = FVector(0.2f, 48.4f, -10.6f);
 #pragma endregion projectile variable
+
+
 
 
 private:	
