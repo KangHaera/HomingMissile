@@ -24,10 +24,11 @@ protected:
 private:
 	void OnRepeatTimer();
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_RepeatInterval = 3.f;;
+
 private:
 	FTimerHandle m_RepeatTimerHandle;
-	float m_RepeatInterval;
-
-
-
+	
 };
