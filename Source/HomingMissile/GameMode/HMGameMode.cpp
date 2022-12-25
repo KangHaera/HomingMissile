@@ -10,7 +10,7 @@
 AHMGameMode::AHMGameMode()
 	: Super()
 {
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPersonCPP/Blueprints/Player"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPersonCPP/Blueprints/Player.Player_C"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 
 	HUDClass = AHMHUD::StaticClass();
