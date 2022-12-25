@@ -18,37 +18,37 @@
 
 AHMCharacter::AHMCharacter()
 {
-	GetCapsuleComponent()->InitCapsuleSize(50.f, 90.f);
+	GetCapsuleComponent()->InitCapsuleSize(CapsuleComponentSizeX, CapsuleComponentSizeY);
 
 	m_BaseTurnRate = 45.f;
 	m_BaseLookUpRate = 45.f;
 
-	//	Ä«¸Ş¶ó »ı¼º
+	//	ì¹´ë©”ë¼ ìƒì„±
 	m_FirstPersonCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	m_FirstPersonCameraComp->SetupAttachment(GetCapsuleComponent());
-	m_FirstPersonCameraComp->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
+	m_FirstPersonCameraComp->SetRelativeLocation(FirstPersomCameraCompLocation); // Position the camera
 	m_FirstPersonCameraComp->bUsePawnControlRotation = true;
 
-	//	½ºÄÌ·¹Å» ¸Ş½Ã »ı¼º
+	//	ìŠ¤ì¼ˆë ˆíƒˆ ë©”ì‹œ ìƒì„±
 	m_SkeletalMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh"));
 	m_SkeletalMeshComp->SetOnlyOwnerSee(true);
 	m_SkeletalMeshComp->SetupAttachment(m_FirstPersonCameraComp);
 	m_SkeletalMeshComp->bCastDynamicShadow = false;
 	m_SkeletalMeshComp->CastShadow = false;
-	m_SkeletalMeshComp->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
-	m_SkeletalMeshComp->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
+	m_SkeletalMeshComp->SetRelativeRotation(SkeletalMeshCompRotation);
+	m_SkeletalMeshComp->SetRelativeLocation(SkeletalMeshCompLocation);
 
-	//	ÃÑ »ı¼º
+	//	ì´ ìƒì„±
 	m_GunComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
 	m_GunComp->SetOnlyOwnerSee(false);		
 	m_GunComp->bCastDynamicShadow = false;
 	m_GunComp->CastShadow = false;
 	m_GunComp->SetupAttachment(RootComponent);
 
-	//	ÃÑ±¸ À§Ä¡
+	//	ì´êµ¬ ìœ„ì¹˜
 	m_MuzzleLocationComp = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	m_MuzzleLocationComp->SetupAttachment(m_GunComp);
-	m_MuzzleLocationComp->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
+	m_MuzzleLocationComp->SetRelativeLocation(MuzzleLocationCompLocation);
 }
 
 void AHMCharacter::BeginPlay()
