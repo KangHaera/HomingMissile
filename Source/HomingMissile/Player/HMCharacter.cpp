@@ -18,7 +18,7 @@
 
 AHMCharacter::AHMCharacter()
 {
-	GetCapsuleComponent()->InitCapsuleSize(CapsuleComponentSizeX, CapsuleComponentSizeY);
+	GetCapsuleComponent()->InitCapsuleSize(m_CapsuleComponentSizeX, m_CapsuleComponentSizeY);
 
 	m_BaseTurnRate = 45.f;
 	m_BaseLookUpRate = 45.f;
@@ -26,7 +26,7 @@ AHMCharacter::AHMCharacter()
 	//	카메라 생성
 	m_FirstPersonCameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	m_FirstPersonCameraComp->SetupAttachment(GetCapsuleComponent());
-	m_FirstPersonCameraComp->SetRelativeLocation(FirstPersomCameraCompLocation); // Position the camera
+	m_FirstPersonCameraComp->SetRelativeLocation(m_FirstPersomCameraCompLocation); // Position the camera
 	m_FirstPersonCameraComp->bUsePawnControlRotation = true;
 
 	//	스켈레탈 메시 생성
@@ -35,8 +35,8 @@ AHMCharacter::AHMCharacter()
 	m_SkeletalMeshComp->SetupAttachment(m_FirstPersonCameraComp);
 	m_SkeletalMeshComp->bCastDynamicShadow = false;
 	m_SkeletalMeshComp->CastShadow = false;
-	m_SkeletalMeshComp->SetRelativeRotation(SkeletalMeshCompRotation);
-	m_SkeletalMeshComp->SetRelativeLocation(SkeletalMeshCompLocation);
+	m_SkeletalMeshComp->SetRelativeRotation(m_SkeletalMeshCompRotation);
+	m_SkeletalMeshComp->SetRelativeLocation(m_SkeletalMeshCompLocation);
 
 	//	총 생성
 	m_GunComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
@@ -48,7 +48,7 @@ AHMCharacter::AHMCharacter()
 	//	총구 위치
 	m_MuzzleLocationComp = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	m_MuzzleLocationComp->SetupAttachment(m_GunComp);
-	m_MuzzleLocationComp->SetRelativeLocation(MuzzleLocationCompLocation);
+	m_MuzzleLocationComp->SetRelativeLocation(m_MuzzleLocationCompLocation);
 }
 
 void AHMCharacter::BeginPlay()
