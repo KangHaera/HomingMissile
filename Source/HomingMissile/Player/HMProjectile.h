@@ -65,14 +65,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		USoundBase* m_ProjectileDestorySound;
-#pragma endregion component variable
-
-#pragma region set homing angle
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		float m_CheckHomingAngle = 0.7;
-#pragma region set homing angle
-
-protected:
+				
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
 		float m_ProjectileCollisionSphereRadius = 5.f;
 
@@ -81,6 +74,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
 		float m_ProjectileMaxSpeed = 3000.f;
+#pragma endregion component variable
+
+#pragma region set homing angle
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		float m_CheckHomingAngle = 0.7;
+#pragma region set homing angle
 
 private:
 	AHMMonster* m_TargetMonster = nullptr;
