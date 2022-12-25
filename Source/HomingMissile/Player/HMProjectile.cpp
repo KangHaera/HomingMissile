@@ -12,30 +12,30 @@
 
 AHMProjectile::AHMProjectile() 
 {
-	//	 ±¸ »ı¼º
+	//	 êµ¬ ìƒì„±
 	m_CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
-	m_CollisionComp->InitSphereRadius(5.0f);
+	m_CollisionComp->InitSphereRadius(m_ProjectileCollisionSphereRadius);
 	m_CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
 	m_CollisionComp->OnComponentHit.AddDynamic(this, &AHMProjectile::CallBack_OnHit);
 	m_CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
 	m_CollisionComp->CanCharacterStepUpOn = ECB_No;
 
-	//	root·Î ÁöÁ¤
+	//	rootë¡œ ì§€ì •
 	RootComponent = m_CollisionComp;
 
-	//	mesh »ı¼º
+	//	mesh ìƒì„±
 	m_StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
 	m_StaticMeshComp->SetupAttachment(RootComponent);
 
-	//	·¹µğ¾óÆ÷½º »ı¼º
+	//	ë ˆë””ì–¼í¬ìŠ¤ ìƒì„±
 	m_RadialForceComp = CreateDefaultSubobject<URadialForceComponent>(TEXT("RadialForceComp"));
 	m_RadialForceComp->SetupAttachment(RootComponent);
 
-	//	ÇÁ·ÎÁ§Å¸ÀÏ ¹«ºê¸ÕÆ® »ı¼º
+	//	í”„ë¡œì íƒ€ì¼ ë¬´ë¸Œë¨¼íŠ¸ ìƒì„±
 	m_ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	m_ProjectileMovementComp->UpdatedComponent = m_CollisionComp;
-	m_ProjectileMovementComp->InitialSpeed = 3000.f;
-	m_ProjectileMovementComp->MaxSpeed = 3000.f;
+	m_ProjectileMovementComp->InitialSpeed = m_ProjectileInitialSpeed;
+	m_ProjectileMovementComp->MaxSpeed = m_ProjectileMaxSpeed;
 	m_ProjectileMovementComp->bRotationFollowsVelocity = true;
 	m_ProjectileMovementComp->bShouldBounce = true;
 
@@ -56,8 +56,8 @@ void AHMProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//	»ı¼ºµÇ°í 0.3ÃÊÈÄ¿¡ Å¸°Ù Ã£±â.
-	//	ÀÌ°Ç ³Ê¹« ¿ø°Å¸®¿ëÀÌ µÇ¾î¹ö·Á¼­ ÁÖ¼®.
+	//	ìƒì„±ë˜ê³  0.3ì´ˆí›„ì— íƒ€ê²Ÿ ì°¾ê¸°.
+	//	ì´ê±´ ë„ˆë¬´ ì›ê±°ë¦¬ìš©ì´ ë˜ì–´ë²„ë ¤ì„œ ì£¼ì„.
 	//GetWorld()->GetTimerManager().SetTimer(m_TimeHandle, this, &AHMProjectile::MoveToTarget, 0.3f, false);
 	MoveToTarget();
 }
@@ -106,9 +106,9 @@ USceneComponent* AHMProjectile::FindHomingTarget()
 			continue;
 		}
 
-		//	³»ÀûÀ» ±¸ÇØ¼­
-		//	1ÀÌ¸é 0µµ, 0ÀÌ¸é 90µµ, -1ÀÌ¸é 180µµ
-		//	Àû´çÈ÷ 0.7·Î ¹üÀ§¸¦ Àâ¾ÆÁØ´Ù
+		//	ë‚´ì ì„ êµ¬í•´ì„œ
+		//	1ì´ë©´ 0ë„, 0ì´ë©´ 90ë„, -1ì´ë©´ 180ë„
+		//	ì ë‹¹íˆ 0.7ë¡œ ë²”ìœ„ë¥¼ ì¡ì•„ì¤€ë‹¤
 		float Angle = GetDotProductTo(GetMontser);
 		if (Angle < m_CheckHomingAngle)
 		{
@@ -116,7 +116,7 @@ USceneComponent* AHMProjectile::FindHomingTarget()
 		}
 
 
-		//	¹üÀ§ ¾È¿¡¼­µµ °¡±î¿î ¾Ö¸¦ ¸ÕÀú ¼¿·ºÆ® ÇÑ´Ù.
+		//	ë²”ìœ„ ì•ˆì—ì„œë„ ê°€ê¹Œìš´ ì• ë¥¼ ë¨¼ì € ì…€ë ‰íŠ¸ í•œë‹¤.
 		//FVector DirectionVector = GetTargetLocation() - GetMontser->GetTargetLocation();
 		//float VectorSize = DirectionVector.Size();
 		//if (VectorSize < m_TargetDistance)
@@ -125,7 +125,7 @@ USceneComponent* AHMProjectile::FindHomingTarget()
 		//	m_TargetMonster = GetMontser;
 		//}
 
-		//	°¡±î¿î¾Öº¸´Ù ¿¡ÀÓÀÌ¶û °¡±î¿î¾Ö·Î º¯°æ.
+		//	ê°€ê¹Œìš´ì• ë³´ë‹¤ ì—ì„ì´ë‘ ê°€ê¹Œìš´ì• ë¡œ ë³€ê²½.
 		if (Angle > m_SaveAngle)
 		{
 			m_SaveAngle = Angle;
@@ -153,7 +153,7 @@ void AHMProjectile::CallBack_OnHit(UPrimitiveComponent* InHitComp, AActor* InOth
 		return;
 	}
 
-	//	º®¿¡ ¸ÂÀ¸¸é ¹Ù·Î »èÁ¦
+	//	ë²½ì— ë§ìœ¼ë©´ ë°”ë¡œ ì‚­ì œ
 	if (InOtherActor->ActorHasTag(TEXT("Wall")) == true)
 	{
 		if (InOtherActor->Tags[0] == TEXT("Wall"))
@@ -162,7 +162,7 @@ void AHMProjectile::CallBack_OnHit(UPrimitiveComponent* InHitComp, AActor* InOth
 		}
 	}
 
-	//	¸ó½ºÅÍ ¸Â¾Ò´ÂÁö Ã¼Å©
+	//	ëª¬ìŠ¤í„° ë§ì•˜ëŠ”ì§€ ì²´í¬
 	AHMMonster* CastMonster = Cast<AHMMonster>(InOtherActor);
 	if (CastMonster == nullptr)
 	{
@@ -171,10 +171,10 @@ void AHMProjectile::CallBack_OnHit(UPrimitiveComponent* InHitComp, AActor* InOth
 
 	if (InOtherActor != this && InOtherComp != nullptr)
 	{
-		//	¸ó½ºÅÍ Ã¼·Â Â÷°¨
+		//	ëª¬ìŠ¤í„° ì²´ë ¥ ì°¨ê°
 		CastMonster->UnderAttack();
 
-		//	ÃÑ¾Ë »èÁ¦
+		//	ì´ì•Œ ì‚­ì œ
 		ProjectileDestroy();
 	}
 }
