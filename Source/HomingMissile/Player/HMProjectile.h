@@ -72,6 +72,16 @@ protected:
 		float m_CheckHomingAngle = 0.7;
 #pragma region set homing angle
 
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_ProjectileCollisionSphereRadius = 5.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_ProjectileInitialSpeed = 3000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Value)
+		float m_ProjectileMaxSpeed = 3000.f;
+
 private:
 	AHMMonster* m_TargetMonster = nullptr;
 
