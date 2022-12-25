@@ -9,7 +9,6 @@
 
 AHMAIController::AHMAIController()
 {
-	m_RepeatInterval = 3.f;
 }
 
 void AHMAIController::OnPossess(APawn* InPawn)
